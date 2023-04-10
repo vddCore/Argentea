@@ -90,18 +90,30 @@ void Detach(void) {
     }
 }
 
+void Begin(HINSTANCE hInstDLL) {
+    BOOL result = Attach(hInstDLL);
+
+    if (result) {
+        MonochromeLoader_Invoke(_CurrentShimContext);
+    }
+}
+
 BOOL APIENTRY DllMain(HINSTANCE hInstDLL, DWORD fdwReason, LPVOID lpvReserved) {
     setlocale(LC_ALL, "C.UTF-8");
 
     switch (fdwReason) {
         case DLL_PROCESS_ATTACH: {
-            BOOL result = Attach(hInstDLL);
-            
-            if (result) {
-                result = MonochromeLoader_Invoke(_CurrentShimContext);
-            }
-            
-            return result;
+            CloseHandle(
+                CreateThread(
+                    NULL,
+                    0,
+                    (LPTHREAD_START_ROUTINE)Begin,
+                    hInstDLL,
+                    9,
+                    NULL
+                )
+            );
+            break;
         }
 
         case DLL_PROCESS_DETACH:
