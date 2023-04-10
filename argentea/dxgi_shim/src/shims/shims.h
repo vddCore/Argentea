@@ -20,7 +20,7 @@
     x = NULL;           \
   }                     \
 
-typedef enum _ShimCreationResult {
+typedef enum _ShimCreateResult {
     SHIM_OK = 0,
     SHIM_OUT_OF_MEMORY = -1,
     SHIM_FUNCTION_MISSING = -2

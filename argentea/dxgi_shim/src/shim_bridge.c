@@ -5,26 +5,24 @@
 #include "shim_bridge.h"
 #include "shims/shims.h"
 
-int ShimBridge_Create(HINSTANCE hDllInstance) {
-    WCHAR systemDirectoryPath[MAX_PATH] = {0};
-    if (!GetSystemDirectoryW(systemDirectoryPath, sizeof(systemDirectoryPath))) {
+int ShimBridge_Create(PShimContext context) {
+    if (!context) {
         return -1;
     }
 
-    WCHAR thisModulePath[MAX_PATH] = {0};
-    if (!GetModuleFileNameW(hDllInstance, thisModulePath, sizeof(thisModulePath))) {
-        return -1;
-    }
-
-    LPWSTR thisModuleFileName = PathFindFileNameW(thisModulePath);
+    LPWSTR thisModuleFileName = PathFindFileNameW(context->thisModulePath);
     if (!thisModuleFileName) {
         return -1;
     }
 
-    WCHAR completeModulePath[MAX_PATH] = {0};
-    PathCombineW(completeModulePath, systemDirectoryPath, thisModuleFileName);
+    WCHAR impersonatedModulePath[MAX_PATH] = {0};
+    PathCombineW(
+        impersonatedModulePath,
+        context->systemDirectoryPath,
+        thisModuleFileName
+    );
 
-    HMODULE originalModuleHandle = LoadLibraryW(completeModulePath);
+    HMODULE originalModuleHandle = LoadLibraryW(impersonatedModulePath);
     if (!originalModuleHandle) {
         return -1;
     }

@@ -3,7 +3,9 @@
 
 #include <windows.h>
 
-void ShimLifecycle_Attach(DWORD dwProcessId);
-void ShimLifecycle_Detach(void);
+#include "shim_context.h"
+
+void ShimLifecycle_Attach(PShimContext context);
+void ShimLifecycle_Detach(PShimContext context);
 
 #endif //ARGENTEA_SHIM_LIFECYCLE_H

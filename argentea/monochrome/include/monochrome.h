@@ -5,7 +5,8 @@
 
 #define MONOCHROME_CAPI extern "C" __declspec(dllexport)
 #define MONOCHROME_INITIALIZER_NAME Monochrome_Initialize
+#define MONOCHROME_INITIALIZER_NAMESTRING "Monochrome_Initialize"
 
-typedef void (*PMonochromeInitializer)(const WCHAR* appBaseDirectory);
+typedef BOOL (*PMonochromeInitializer)(const char* appBaseDirectory);
 
 #endif //ARGENTEA_MONOCHROME_H

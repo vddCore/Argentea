@@ -7,6 +7,11 @@
 
 #include <monochrome.h>
 
-MONOCHROME_CAPI void MONOCHROME_INITIALIZER_NAME(const WCHAR* appBaseDirectory) {
-    std::cout << "MonoChrome says hello, C++ world." << std::endl;
+using namespace std;
+
+MONOCHROME_CAPI BOOL MONOCHROME_INITIALIZER_NAME(const char* appBaseDirectory) {
+    string appBaseString(appBaseDirectory);
+    cout << "MonoChrome says hello, C++ world: " << appBaseString << endl;
+    
+    return TRUE;
 }
