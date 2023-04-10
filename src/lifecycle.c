@@ -1,4 +1,5 @@
 ﻿#include <stdio.h>
+
 #include "lifecycle.h"
 
 void _LC_CreateDebugConsole() {

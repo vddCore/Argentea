@@ -41,7 +41,7 @@ typedef DWORD(WINAPI* PXInputGetKeystroke)(
     void* pKeystroke
 );
 
-typedef struct {
+typedef struct _XInputHook {
     PXInputGetState XInputGetState;
     PXInputSetState XInputSetState;
     PXInputGetCapabilities XInputGetCapabilities;

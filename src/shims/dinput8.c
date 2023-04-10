@@ -5,20 +5,22 @@
 
 static volatile PDInput8Hook _DInput8 = NULL;
 
-int SHIMS_CreateDInput8(HMODULE hModule, OUT PDInput8Hook* outHookStruct) {
+ShimCreateResult SHIMS_CreateDInput8(HMODULE hModule, OUT PDInput8Hook* outHookStruct) {
     _DInput8 = (PDInput8Hook)malloc(sizeof(DInput8Hook));
 
     if (!_DInput8) {
-        return -1;
+        return SHIM_OUT_OF_MEMORY;
     }
+    
+    memset(_DInput8, 0, sizeof(DInput8Hook));
 
-    SHIM_INIT(_DInput8, DirectInput8Create);
-
+    SHIM_INIT_OR_QUIT(_DInput8, DirectInput8Create);
+    
     if (outHookStruct) {
         *outHookStruct = _DInput8;
     }
 
-    return 0;
+    return SHIM_OK;
 }
 
 void SHIMS_DestroyDInput8(void) {

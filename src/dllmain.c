@@ -1,11 +1,11 @@
-﻿#include <stdio.h>
-#include <Windows.h>
+﻿#include <locale.h>
+
+/* Required to select target architecture. */
+#include <windows.h>
 #include <processthreadsapi.h>
 
-#include <locale.h>
-
 #include "lifecycle.h"
-#include "shim_bridge/shim_bridge.h"
+#include "shim_bridge.h"
 
 BOOL APIENTRY DllMain(HINSTANCE hInstDLL, DWORD fdwReason, LPVOID lpvReserved) {
     setlocale(LC_ALL, "C.UTF-8");

@@ -5,21 +5,23 @@
 
 static volatile PX3DAudioHook _X3DAudio = NULL;
 
-int SHIMS_CreateX3DAudio(HMODULE hModule, OUT PX3DAudioHook* outHookStruct) {
+ShimCreateResult SHIMS_CreateX3DAudio(HMODULE hModule, OUT PX3DAudioHook* outHookStruct) {
     _X3DAudio = (PX3DAudioHook)malloc(sizeof(X3DAudioHook));
 
     if (!_X3DAudio) {
-        return -1;
+        return SHIM_OUT_OF_MEMORY;
     }
+    
+    memset(_X3DAudio, 0, sizeof(X3DAudioHook));
 
-    SHIM_INIT(_X3DAudio, X3DAudioInitialize);
-    SHIM_INIT(_X3DAudio, X3DAudioCalculate);
+    SHIM_INIT_OR_QUIT(_X3DAudio, X3DAudioInitialize);
+    SHIM_INIT_OR_QUIT(_X3DAudio, X3DAudioCalculate);
     
     if (outHookStruct) {
         *outHookStruct = _X3DAudio;
     }
     
-    return 0;
+    return SHIM_OK;
 }
 
 void SHIMS_DestroyX3DAudio(void) {

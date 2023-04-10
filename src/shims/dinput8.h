@@ -11,7 +11,7 @@ typedef HRESULT(WINAPI* PDirectInput8Create)(
     void* punkOuter
 );
 
-typedef struct {
+typedef struct _DInput8Hook {
     PDirectInput8Create DirectInput8Create;
 } DInput8Hook, *PDInput8Hook;
 

@@ -1,7 +1,6 @@
 ﻿#include <stdio.h>
-#include <stdlib.h>
 
-#include <shlwapi.h>
+#include <Shlwapi.h>
 
 #include "shim_bridge.h"
 #include "shims/shims.h"

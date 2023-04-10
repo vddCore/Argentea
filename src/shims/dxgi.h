@@ -60,7 +60,7 @@ typedef HRESULT(WINAPI* PDXGIReportAdapterConfiguration)(
     DWORD dwUnk_0
 );
 
-typedef struct {
+typedef struct _DXGIHook {
     PDXGIDumpJournal DXGIDumpJournal;
     PCreateDXGIFactory CreateDXGIFactory;
     PCreateDXGIFactory1 CreateDXGIFactory1;

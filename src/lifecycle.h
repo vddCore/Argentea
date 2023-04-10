@@ -1,7 +1,7 @@
 ﻿#ifndef ARGENTEA_LIFECYCLE_H
 #define ARGENTEA_LIFECYCLE_H
 
-#include <Windows.h>
+#include <windows.h>
 
 void LC_Attach(DWORD dwProcessId);
 void LC_Detach(void);

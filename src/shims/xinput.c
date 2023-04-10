@@ -5,26 +5,28 @@
 
 static volatile PXInputHook _XInput = NULL;
 
-int SHIMS_CreateXInput(HMODULE hModule, OUT PXInputHook* outHookStruct) {
+ShimCreateResult SHIMS_CreateXInput(HMODULE hModule, OUT PXInputHook* outHookStruct) {
     _XInput = (PXInputHook)malloc(sizeof(XInputHook));
     
     if (!_XInput) {
-        return -1;
+        return SHIM_OUT_OF_MEMORY;
     }
+    
+    memset(_XInput, 0, sizeof(XInputHook));
 
-    SHIM_INIT(_XInput, XInputGetState);
-    SHIM_INIT(_XInput, XInputSetState);
-    SHIM_INIT(_XInput, XInputGetCapabilities);
-    SHIM_INIT(_XInput, XInputEnable);
-    SHIM_INIT(_XInput, XInputGetDSoundAudioDeviceGuids);
-    SHIM_INIT(_XInput, XInputGetBatteryInformation);
-    SHIM_INIT(_XInput, XInputGetKeystroke);
+    SHIM_INIT_OR_QUIT(_XInput, XInputGetState);
+    SHIM_INIT_OR_QUIT(_XInput, XInputSetState);
+    SHIM_INIT_OR_QUIT(_XInput, XInputGetCapabilities);
+    SHIM_INIT_OR_QUIT(_XInput, XInputEnable);
+    SHIM_INIT_OR_QUIT(_XInput, XInputGetDSoundAudioDeviceGuids);
+    SHIM_INIT_OR_QUIT(_XInput, XInputGetBatteryInformation);
+    SHIM_INIT_OR_QUIT(_XInput, XInputGetKeystroke);
     
     if (outHookStruct) {
         *outHookStruct = _XInput;
     }
     
-    return 0;
+    return SHIM_OK;
 }
 
 void SHIMS_DestroyXInput(void) {

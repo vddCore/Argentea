@@ -17,7 +17,7 @@ typedef DWORD(WINAPI* PX3DAudioCalculate)(
     void* pDSPSettings
 );
 
-typedef struct {
+typedef struct _X3DAudioHook {
     PX3DAudioInitialize X3DAudioInitialize;
     PX3DAudioCalculate X3DAudioCalculate;
 } X3DAudioHook, *PX3DAudioHook;

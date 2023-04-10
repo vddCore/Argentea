@@ -1,33 +1,36 @@
 ﻿#include <stdlib.h>
+#include <stdio.h>
 
 #include "shims.h"
 #include "dxgi.h"
 
 static volatile PDXGIHook _DXGI = NULL;
 
-int SHIMS_CreateDXGI(HMODULE hModule, OUT PDXGIHook* outHookStruct) {
+ShimCreateResult SHIMS_CreateDXGI(HMODULE hModule, OUT PDXGIHook* outHookStruct) {
     _DXGI = (PDXGIHook)malloc(sizeof(DXGIHook));
 
     if (!_DXGI) {
-        return -1;
+        return SHIM_OUT_OF_MEMORY;
     }
     
-    SHIM_INIT(_DXGI, DXGIDumpJournal);
-    SHIM_INIT(_DXGI, CreateDXGIFactory);
-    SHIM_INIT(_DXGI, CreateDXGIFactory1);
-    SHIM_INIT(_DXGI, CreateDXGIFactory2);
-    SHIM_INIT(_DXGI, DXGID3D10CreateDevice);
-    SHIM_INIT(_DXGI, DXGID3D10CreateLayeredDevice);
-    SHIM_INIT(_DXGI, DXGID3D10GetLayeredDeviceSize);
-    SHIM_INIT(_DXGI, DXGID3D10RegisterLayers);
-    SHIM_INIT(_DXGI, DXGIGetDebugInterface1);
-    SHIM_INIT(_DXGI, DXGIReportAdapterConfiguration);
+    memset(_DXGI, 0, sizeof(DXGIHook));
+
+    SHIM_INIT_OR_QUIT(_DXGI, DXGIDumpJournal);
+    SHIM_INIT_OR_QUIT(_DXGI, CreateDXGIFactory);
+    SHIM_INIT_OR_QUIT(_DXGI, CreateDXGIFactory1);
+    SHIM_INIT_OR_QUIT(_DXGI, CreateDXGIFactory2);
+    SHIM_INIT_OR_QUIT(_DXGI, DXGID3D10CreateDevice);
+    SHIM_INIT_OR_QUIT(_DXGI, DXGID3D10CreateLayeredDevice);
+    SHIM_INIT_OR_QUIT(_DXGI, DXGID3D10GetLayeredDeviceSize);
+    SHIM_INIT_OR_QUIT(_DXGI, DXGID3D10RegisterLayers);
+    SHIM_INIT_OR_QUIT(_DXGI, DXGIGetDebugInterface1);
+    SHIM_INIT_OR_QUIT(_DXGI, DXGIReportAdapterConfiguration);
     
     if (outHookStruct) {
         *outHookStruct = _DXGI;
     }
     
-    return 0;
+    return SHIM_OK;
 }
 
 void SHIMS_DestroyDXGI(void) {
