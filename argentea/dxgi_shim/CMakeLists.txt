@@ -9,3 +9,11 @@ set_source_files_properties(src/dllmain.def PROPERTIES HEADER_FILE_ONLY TRUE)
 
 set_target_properties(dxgi_shim PROPERTIES PREFIX "")
 set_target_properties(dxgi_shim PROPERTIES OUTPUT_NAME "dxgi")
+
+
+add_custom_command(
+    TARGET dxgi_shim POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_BINARY_DIR}/bin/dxgi.dll
+    ${DEADLINK_BINARY_DIR}/dxgi.dll
+)

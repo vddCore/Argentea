@@ -109,7 +109,7 @@ BOOL APIENTRY DllMain(HINSTANCE hInstDLL, DWORD fdwReason, LPVOID lpvReserved) {
                     0,
                     (LPTHREAD_START_ROUTINE)Begin,
                     hInstDLL,
-                    9,
+                    0,
                     NULL
                 )
             );
